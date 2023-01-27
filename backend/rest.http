@@ -1,0 +1,101 @@
+### Вход в аккаунт
+POST http://localhost:3000/signin
+Content-Type: application/json
+
+{
+  "email": "admin@mail.ru",
+  "password": "admin12"
+}
+
+### Выход из аккаунта
+GET http://localhost:3000/logout
+
+
+### Регистрация
+POST http://localhost:3000/signup
+Content-Type: application/json
+
+{
+  "email": "admddddiвsыdn@admin.ru",
+  "password": "longPass123",
+  "name": "test",
+  "about": "about",
+  "avatar": "https://ya.ru/av.bmp"
+}
+
+
+
+
+
+
+### Получить всех пользователей
+GET http://localhost:3000/users
+
+### возвращает пользователя по ID
+GET http://localhost:3000/users/63a6e8d4a3af445c714570cb
+
+
+### Создает пользователя
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "name": "1",
+  "about": "admin",
+  "avatar": "https://ya.ru/av.bmp",
+  "email": "dimannas@mail.ru",
+  "password": "12w4"
+}
+
+### Найти пользователя
+GET http://localhost:3000/users/me
+# Content-Type: Bearer
+
+# {
+#   "email": "admin@mail.ru",
+#   "password": "admin12"
+# }
+
+
+### Обновить данные пользователя
+PATCH http://localhost:3000/users/me
+Content-Type: application/json
+
+{
+  "name": "Обновленное имя11",
+  "about": "Обновленная информация о себе"
+}
+
+### Обновить Аватар пользователя
+PATCH http://localhost:3000/users/me/avatar
+Content-Type: application/json
+
+{
+  "avatar": "https://images.unsplash.com/photo-1670431757843-e8fd3f24490f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=700&q=60"
+}
+
+
+
+
+
+
+### получить все карточки
+GET http://localhost:3000/cards
+
+### создает карточку
+POST http://localhost:3000/cards
+Content-Type: application/json
+
+{
+  "name": "111111",
+  "link": "5646456",
+}
+
+### удаляет карточку по id
+DELETE http://localhost:3000/cards/63987cbefe12585b6b697056
+
+### поставить лайк на карточку
+PUT http://localhost:3000/cards/639764b55bea54cede220346/likes
+
+### убрать лайк с карточки
+DELETE http://localhost:3000/cards/639764b55bea54cede220346/likes
