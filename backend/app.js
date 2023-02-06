@@ -4,17 +4,25 @@ const express = require('express');
 const mongoose = require('mongoose');
 
 const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+
 const { errors } = require('celebrate');
 const router = require('./routes');
 const handleErrors = require('./middlewares/handleErrors');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const path = require('path');
 
 const { PORT = 3000 } = process.env;
 const app = express();
 
+// app.use('/api', require('../router'));
+app.use(express.static(path.join(__dirname, 'build'))); 
+app.use(bodyParser.json());
+
 // // подключаем мидлвары, роуты и тд
 app.use(express.json());
 app.use(cookieParser());
+
 
 app.use(requestLogger); // логгер запросов
 

@@ -51,6 +51,10 @@ router.get('/logout', (req, res) => {
   res.clearCookie('token').send();
 });
 
-router.use('*', (req, res) => res.status(ERROR_NOT_FOUND).send({ message: 'Указан неправильный путь' }));
+// router.use('*', (req, res) => res.status(ERROR_NOT_FOUND).send({ message: 'Указан неправильный путь' }));
+
+router.use((req, res, next) => {
+  next(new NotFoundError(`Запрашиваемый ресурс по адресу '${req.path}' не найден`));
+});
 
 module.exports = router;

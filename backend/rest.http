@@ -1,10 +1,21 @@
+### Регистрация
+POST http://158.160.6.193:3000/api/signup
+Content-Type: application/json
+
+{
+}
+
+### Выход из аккаунта
+GET http://localhost:3000/logout
+
+
 ### Вход в аккаунт
 POST http://localhost:3000/signin
 Content-Type: application/json
 
 {
-  "email": "admin@mail.ru",
-  "password": "admin12"
+  "email": "admin@admin.ru",
+  "password": "admin"
 }
 
 ### Выход из аккаунта
@@ -16,15 +27,14 @@ POST http://localhost:3000/signup
 Content-Type: application/json
 
 {
-  "email": "admddddiвsыdn@admin.ru",
-  "password": "longPass123",
-  "name": "test",
-  "about": "about",
-  "avatar": "https://ya.ru/av.bmp"
+  "email": "adminn@admin.ru",
+  "password": "admin",
 }
 
 
-
+# "name": "test",
+# "about": "about",
+# "avatar": "https://ya.ru/av.bmp"
 
 
 

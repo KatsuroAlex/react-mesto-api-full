@@ -60,7 +60,7 @@ const login = async (req, res, next) => {
     res
       .cookie('token', token, {
         maxAge: 3600000 * 24 * 7,
-        httpOnly: true,
+        // httpOnly: true,
       })
       .send({ token });
   } catch (err) {
@@ -120,7 +120,7 @@ const updateUser = async (req, res, next) => {
 const updateAvatar = async (req, res, next) => {
   try {
     const options = { new: true };
-    const user = await User.findByIdAndUpdate(req.user, req.body, options).orFail(new NotFoundError('Пользователь по указанному _id не найден'));
+    const user = await User.findByIdAndUpdate(req.user._id, req.body, options).orFail(new NotFoundError('Пользователь по указанному _id не найден'));
     return res.status(SUCCESS).json({ user });
   } catch (err) {
     if (err.name === 'ValidationError') {
