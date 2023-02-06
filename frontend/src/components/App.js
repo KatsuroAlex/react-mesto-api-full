@@ -18,6 +18,11 @@ import InfoTooltip from "./InfoTooltip.js";
 import * as auth from "../utils/auth.js";
 
 function App() {
+  const history = useHistory();
+  const [isInfoTooltip, setInfoTooltip] = useState({isOpen: false, ok: false});
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [email, setEmail] = useState("");
+
   const [isEditProfilePopupOpen, setEditProfileClick] = useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
@@ -30,23 +35,65 @@ function App() {
     element: {},
   });
 
-  useEffect(() => {
-    api
-      .getProfileData()
-      .then((data) => {
-        setCurrentUser(data);
-      })
-      .catch((err) => console.log(err));
-  }, []);
 
+
+
+  // получаем данные карточек при загрузке страницы
+  
+  // useEffect(() => {
+  //   api
+  //     .getInitialCards()
+  //     .then((data) => {
+  //       setCards(data);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, []);
   useEffect(() => {
-    api
-      .getInitialCards()
+    if(loggedIn){
+      api.getInitialCards()
       .then((data) => {
         setCards(data);
       })
       .catch((err) => console.log(err));
-  }, []);
+    }
+  }, [loggedIn]);
+
+
+  //при загрузке если получаем пользователя то перенаправляем его
+  // useEffect(() => {
+  //   api
+  //     .getProfileData()
+  //     .then((data) => {
+  //       setCurrentUser(data);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, []);
+  useEffect(() => {
+    // if(loggedIn){
+      api
+        .getProfileData()
+        .then((data) => {
+          handleLoggedIn();
+          setEmail(data.email);
+          setCurrentUser(data);
+          history.push("/");
+        })
+        .catch((err) => console.log(err));
+      // }
+  }, [history, loggedIn]);
+
+
+  function handleCardClick(card) {
+    setSelectedCard({ isOpen: true, element: card });
+  }
+
+  function handleInfoTooltip(res) {
+    setInfoTooltip({ ...isInfoTooltip, isOpen: true, ok: res });
+  }
+
+  function handleLoggedIn() {
+    setLoggedIn(true);
+  }
 
   function closeAllPopups() {
     setEditProfileClick(false);
@@ -57,13 +104,52 @@ function App() {
     setInfoTooltip(false);
   }
 
-  function handleCardClick(card) {
-    setSelectedCard({ isOpen: true, element: card });
+
+
+  // обновляем пользователя
+  function handleUpdateUser(newUserData) {
+    api
+      .setUserInfo(newUserData)
+      .then((data) => {
+        setCurrentUser(data);
+        closeAllPopups();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  // Обновляем аватар
+  function handleUpdateAvatar(newAvatarLink) {
+    api
+      .setUserAvatar(newAvatarLink)
+      .then((data) => {
+        setCurrentUser({ currentUser, avatar: data.avatar });
+        closeAllPopups();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  // добавляем новую карточку
+  function handleAddPlaceSubmit(cardData) {
+    api
+      .postNewCard(cardData)
+      .then((newCard) => {
+        setCards([newCard, ...cards]);
+        closeAllPopups();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   function handleCardLike(card) {
     // Снова проверяем, есть ли уже лайк на этой карточке
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
+    // const isLiked = card.likes.some((i) => i === currentUser._id);
+
     // Отправляем запрос в API и получаем обновлённые данные карточки
     api
       .changeLikeCardStatus(card._id, !isLiked)
@@ -77,6 +163,7 @@ function App() {
       });
   }
 
+  // удаление карточки
   function handleCardDelete(card) {
     api
       .deleteCard(card._id)
@@ -87,55 +174,6 @@ function App() {
       .catch((err) => {
         console.log(err);
       });
-  }
-
-  function handleUpdateUser(newUserData) {
-    api
-      .setUserInfo(newUserData)
-      .then((data) => {
-        setCurrentUser(data);
-        closeAllPopups();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
-  function handleUpdateAvatar(newAvatarLink) {
-    api
-      .setUserAvatar(newAvatarLink)
-      .then((data) => {
-        setCurrentUser({ currentUser, avatar: data.avatar });
-        closeAllPopups();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
-  function handleAddPlaceSubmit(cardData) {
-    api
-      .postNewCard(cardData)
-      .then((newCard) => {
-        setCards([newCard, ...cards]);
-        closeAllPopups();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
-  const history = useHistory();
-  const [isInfoTooltip, setInfoTooltip] = useState({isOpen: false, ok: false});
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [email, setEmail] = useState("");
-
-  function handleInfoTooltip(res) {
-    setInfoTooltip({ ...isInfoTooltip, isOpen: true, ok: res });
-  }
-
-  function handleLoggedIn() {
-    setLoggedIn(true);
   }
 
   ////////Запрос на регистрирацию пользователя
@@ -154,7 +192,7 @@ function App() {
       });
   }
 
-  ////////Запрос на вход пользователя
+  //////Запрос на вход пользователя
   function handleLogin(password, email) {
     auth
       .login(password, email)
@@ -172,26 +210,47 @@ function App() {
       });
   }
 
-  ///////Проверка токена
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      auth.checkToken(token).then((data) => {
-        if (data) {
-          setEmail(data.data.email);
-          handleLoggedIn();
-          history.push("/");
-        }
-      });
-    }
-  }, [history]);
+  // function handleLogin(password, email) {
+  //   auth
+  //     .login(password, email)
+  //     .then((data) => {
+  //         setEmail(email);
+  //         handleLoggedIn();
+  //         localStorage.setItem("token", data.token);
+  //         history.push("/");
+  //     })
+  //     .catch((err) => {
+  //       handleInfoTooltip(false);
+  //       console.log(err);
+  //     });
+  // }
+
+  // /////Проверка токена
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+  //   if (token) {
+  //     auth.checkToken(token).then((data) => {
+  //       if (data) {
+  //         setEmail(data.data.email);
+  //         handleLoggedIn();
+  //         history.push("/");
+  //       }
+  //     });
+  //   }
+  // }, [history]);
 
   //////////Обработка выхода пользователя
   function handleSignOut() {
     localStorage.removeItem("token");
-    setLoggedIn(false);
-    setEmail("");
-    history.push("/sign-in");
+    auth.logout()
+      .then(res => {
+        setLoggedIn(false);
+        setEmail("");
+        history.push("/sign-in");
+      })
+      .catch(err => {
+        console.log(err);
+      })
   }
 
   return (
