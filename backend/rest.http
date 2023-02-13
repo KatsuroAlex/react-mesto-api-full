@@ -29,12 +29,13 @@ Content-Type: application/json
 {
   "email": "adminn@admin.ru",
   "password": "admin",
+  "name": "test",
+  "about": "about",
+  "avatar": "https://ya.ru/av.bmp"
 }
 
 
-# "name": "test",
-# "about": "about",
-# "avatar": "https://ya.ru/av.bmp"
+
 
 
 
@@ -42,7 +43,7 @@ Content-Type: application/json
 GET http://localhost:3000/users
 
 ### возвращает пользователя по ID
-GET http://localhost:3000/users/63a6e8d4a3af445c714570cb
+GET http://localhost:3000/users/63e3fc62c2ccf7b70fc2f616
 
 
 ### Создает пользователя

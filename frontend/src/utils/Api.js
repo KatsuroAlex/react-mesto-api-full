@@ -7,8 +7,8 @@ class Api {
     this._cardsUrl = `${this._baseUrl}/cards`;
     // this._avatarUrl = `${this._baseUrl}/users/me/avatar`;
     // this._likesUrl = `${this._baseUrl}/cards/cardId/likes`;
-    // this._headers = headers;
-    this._token = headers['authorization'];
+    this._headers = headers;
+    // this._token = headers['authorization'];
   }
 
   _getResponseData(res) {
@@ -21,10 +21,11 @@ class Api {
   //////// загружаем данные пользователя с сервера
   getProfileData() {
     return fetch(this._userUrl, {
-      // headers: this._headers,
-      headers: {
-        authorization: this._token,
-      },
+      // method: "GET",
+      headers: this._headers,
+      // headers: {
+      //   authorization: `Bearer ${localStorage.getItem('token')}`,
+      // },
       credentials: 'include',
     }).then((res) => this._getResponseData(res));
   }
@@ -33,11 +34,11 @@ class Api {
   setUserInfo({ name, about }) {
     return fetch(this._userUrl, {
       method: "PATCH",
-      // headers: this._headers,
-      headers: {
-        authorization: this._token,
-        'Content-Type': 'application/json'
-      },
+      headers: this._headers,
+      // headers: {
+      //   authorization: `Bearer ${localStorage.getItem('token')}`,
+      //   'Content-Type': 'application/json'
+      // },
       credentials: 'include',
       body: JSON.stringify({
         name: name,
@@ -51,11 +52,11 @@ class Api {
   setUserAvatar(src) {
     return fetch(`${this._userUrl}/avatar`, {
       method: "PATCH",
-      // headers: this._headers,
-      headers: {
-        authorization: this._token,
-        'Content-Type': 'application/json'
-      },
+      headers: this._headers,
+      // headers: {
+      //   authorization: `Bearer ${localStorage.getItem('token')}`,
+      //   'Content-Type': 'application/json'
+      // },
       credentials: 'include',
       body: JSON.stringify({
         avatar: src,
@@ -67,10 +68,10 @@ class Api {
   //////// загружаем карточки с сервера
   getInitialCards() {
     return fetch(this._cardsUrl, {
-      // headers: this._headers,
-      headers: {
-        authorization: this._token,
-      },
+      headers: this._headers,
+      // headers: {
+      //   authorization: `Bearer ${localStorage.getItem('token')}`,
+      // },
       credentials: 'include',
     }).then((res) => this._getResponseData(res));
   }
@@ -79,11 +80,11 @@ class Api {
     postNewCard({ name, link }) {
       return fetch(this._cardsUrl, {
         method: "POST",
-        // headers: this._headers,
-        headers: {
-          authorization: this._token,
-          'Content-Type': 'application/json'
-        },
+        headers: this._headers,
+        // headers: {
+        //   authorization: `Bearer ${localStorage.getItem('token')}`,
+        //   'Content-Type': 'application/json'
+        // },
         credentials: 'include',
         body: JSON.stringify({
           name: name,
@@ -97,10 +98,10 @@ class Api {
     console.log(id);
     return fetch(`${this._cardsUrl}/${id}`, {
       method: "DELETE",
-      // headers: this._headers,
-      headers: {
-        authorization: this._token,
-      },
+      headers: this._headers,
+      // headers: {
+      //   authorization: `Bearer ${localStorage.getItem('token')}`,
+      // },
       credentials: 'include',
     }).then((res) => this._getResponseData(res));
   }
@@ -109,10 +110,10 @@ class Api {
   changeLikeCardStatus(cardId, isNotLiked) {
     return fetch(`${this._cardsUrl}/${cardId}/likes`, {
       method: isNotLiked ? "PUT" : "DELETE",
-      // headers: this._headers,
-      headers: {
-        authorization: this._token,
-      },
+      headers: this._headers,
+      // headers: {
+      //   authorization: `Bearer ${localStorage.getItem('token')}`,
+      // },
       credentials: 'include',
     }).then((res) => this._getResponseData(res));
   }
@@ -126,12 +127,16 @@ class Api {
 //     "Content-Type": "application/json",
 //   },
 // });
+    // authorization: `Bearer ${localStorage.getItem('token')}`,
+
+
 
 const api = new Api({
   baseUrl: BASE_URL,
+  // credentials: 'include',
   headers: {
-    // authorization: `Bearer ${localStorage.getItem('token')}`,
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    authorization: `Bearer ${localStorage.getItem('token')}`
   },
 });
 

@@ -49,6 +49,8 @@ router.use('/cards', cardRouter);
 
 router.get('/logout', (req, res) => {
   res.clearCookie('token').send();
+  // res.clearCookie('jwt', { secure: 'true', sameSite: 'none' }).send();
+  // res.send('token');
 });
 
 // router.use('*', (req, res) => res.status(ERROR_NOT_FOUND).send({ message: 'Указан неправильный путь' }));
