@@ -58,13 +58,13 @@ const login = async (req, res, next) => {
       { expiresIn: '7d' },
     );
     res
+      // // .cookie('token', token, {
       // .cookie('token', token, {
-      .cookie('token', token, {
-        maxAge: 3600000 * 24 * 7,
-        httpOnly: true,
-        // secure: 'true',
-        // sameSite: 'none',
-      })
+      //   maxAge: 3600000 * 24 * 7,
+      //   httpOnly: true,
+      //   // secure: 'true',
+      //   // sameSite: 'none',
+      // })
       .send({ token });
   } catch (err) {
     next(err);
