@@ -21,7 +21,7 @@ class Api {
   //////// загружаем данные пользователя с сервера
   getProfileData() {
     return fetch(this._userUrl, {
-      // method: "GET",
+      method: "GET",
       // headers: this._headers,
       headers: {
         authorization: this._token,
@@ -133,7 +133,6 @@ const api = new Api({
   credentials: 'include',
   headers: {
     'Content-Type': 'application/json',
-    // authorization: `Bearer ${localStorage.getItem('token')}`
   },
 });
 

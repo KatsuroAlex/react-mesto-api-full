@@ -41,6 +41,7 @@ function App() {
     if(loggedIn){   
       api.getProfileData()
         .then((res) => {
+        handleLoggedIn();
         setCurrentUser(res);
       }) 
       .catch((err) => console.log(err));
@@ -53,22 +54,22 @@ function App() {
     }
   }, [loggedIn]);
 
-  useEffect(() => {
-    tokenCheck()
-  }, [])
+  // useEffect(() => {
+  //   tokenCheck()
+  // }, [])
 
-  function tokenCheck() {
-    const token = localStorage.getItem("token");
-    auth.getContent(token)
-      .then((res) => {
-        if(res) {
-          setLoggedIn(true)
-          setEmail(res.email)
-          history.push('/')
-        }
-      })
-      .catch((err) => console.log(err))
-  }
+  // function tokenCheck() {
+  //   const token = localStorage.getItem("token");
+  //   auth.getContent(token)
+  //     .then((res) => {
+  //       if(res) {
+  //         setLoggedIn(true)
+  //         setEmail(res.email)
+  //         history.push('/')
+  //       }
+  //     })
+  //     .catch((err) => console.log(err))
+  // }
   // //при загрузке если получаем пользователя то перенаправляем его
   // // useEffect(() => {
   // //   api
@@ -220,7 +221,7 @@ function App() {
       .then((data) => {
         if (data) {
           handleInfoTooltip(true);
-          history.push("/sign-in");
+          history.push('/sign-in');
         }
       })
       .catch((err) => {
@@ -247,37 +248,17 @@ function App() {
   //     });
   // }
 
-  function handleLogin(password, email) {
-    auth
-      .login(password, email)
-      .then((token) => {
-        if (token) {
-          // localStorage.setItem("token", token);
-          auth.getContent(token).then((data) => {
-            setEmail(data.email);
-            setLoggedIn(true)
-            history.push('/')
-          });
-        }
+  function handleLogin (password, email) {
+    auth.login(password, email)
+      .then(res => {
+        setEmail(email);
+        handleLoggedIn();
+        history.push('/');
       })
-
-        // auth.getContent(token)
-        //   .then((res) => {
-        //     setEmail(email)
-        //     setLoggedIn(true)
-        //     history.push('/')
-        //   })
-        
-        
-        // setLoggedIn(true);
-        // setEmail(email);
-        // // handleLoggedIn();
-        // // localStorage.setItem("token", data.token);
-        // history.push("/");
-      .catch((err) => {
+      .catch(err => {
         handleInfoTooltip(false);
         console.log(err);
-      });
+      })
   }
 
   // /////Проверка токена
@@ -301,8 +282,8 @@ function App() {
     auth.logout()
       .then(res => {
         setLoggedIn(false);
-        setEmail("");
-        history.push("/sign-in");
+        setEmail('');
+        history.push('/sign-in');
       })
       .catch(err => {
         console.log(err);

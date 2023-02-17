@@ -6,7 +6,7 @@ export const register = (password, email) => {
     method: "POST",
     credentials: 'include',
     headers: {
-      // 'Accept': 'application/json',
+      'Accept': 'application/json',
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
@@ -27,7 +27,7 @@ export const login = (password, email) => {
     method: 'POST',
     credentials: 'include',
     headers: {
-      // 'Accept': 'application/json',
+      'Accept': 'application/json',
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
@@ -35,44 +35,14 @@ export const login = (password, email) => {
       email,
     }),
   })
-
-  .then((response) => {
-    try {
-      if (response.status === 200) {
-        return response.json();
+    .then(res => {
+      if (res.ok) {
+        return res.json;
       }
-    } catch (e) {
-      return e;
-    }
-  })
-  .then((data) => {
-    if (data.token) {
-      localStorage.setItem('token', data.token);
-      return data.token;
-    }
-  })
-
-    // .then((response) => {
-    //   try {
-    //     if (response.status === 200) {
-    //       return response.json();
-    //     }
-    //   } catch (e) {
-    //     return e;
-    //   }
-    // })
-
-    // .then((token) => {
-    //   if (token) {
-    //     localStorage.setItem('token', token)
-    //     return token
-    //   }
-    // })
-    // .then((res) => {
-    //   return res.json;
-    // })
-    .catch((err) => console.log(err));
+      return Promise.reject(`Ошибка: ${res.status}`);
+    })
 };
+
 
 // export const authorize = (password, email) => {
 //   return fetch(`${BASE_URL}/signin`, {
@@ -93,17 +63,12 @@ export const login = (password, email) => {
 // }
 
 
-
-
-
-
 export const logout = (token) => {
   return fetch(`${BASE_URL}/logout`,{
     method: 'GET',
     credentials: 'include',
     headers: {
-      // 'Accept': 'application/json',
-      // 'Accept': 'application/json',
+      'Accept': 'application/json',
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`,
     }
