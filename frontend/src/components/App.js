@@ -252,18 +252,14 @@ function App() {
       .login(password, email)
       .then((token) => {
         if (token) {
-          localStorage.setItem("token", token);
+          // localStorage.setItem("token", token);
           auth.getContent(token).then((data) => {
-            setEmail({ email: data.email });
+            setEmail(data.email);
             setLoggedIn(true)
             history.push('/')
           });
         }
       })
-
-
-
-
 
         // auth.getContent(token)
         //   .then((res) => {

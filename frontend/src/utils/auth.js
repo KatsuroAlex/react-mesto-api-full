@@ -35,15 +35,33 @@ export const login = (password, email) => {
       email,
     }),
   })
-    .then((response) => {
-      try {
-        if (response.status === 200) {
-          return response.json();
-        }
-      } catch (e) {
-        return e;
+
+  .then((response) => {
+    try {
+      if (response.status === 200) {
+        return response.json();
       }
-    })
+    } catch (e) {
+      return e;
+    }
+  })
+  .then((data) => {
+    if (data.token) {
+      localStorage.setItem('token', data.token);
+      return data.token;
+    }
+  })
+
+    // .then((response) => {
+    //   try {
+    //     if (response.status === 200) {
+    //       return response.json();
+    //     }
+    //   } catch (e) {
+    //     return e;
+    //   }
+    // })
+
     // .then((token) => {
     //   if (token) {
     //     localStorage.setItem('token', token)
