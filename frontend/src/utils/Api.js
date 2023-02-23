@@ -37,6 +37,7 @@ class Api {
       // headers: this._headers,
       headers: {
         authorization: this._token,
+        'Content-Type': 'application/json'
       },
       credentials: 'include',
       body: JSON.stringify({
@@ -54,6 +55,7 @@ class Api {
       // headers: this._headers,
       headers: {
         authorization: this._token,
+        'Content-Type': 'application/json'
       },
       credentials: 'include',
       body: JSON.stringify({
@@ -81,6 +83,7 @@ class Api {
         // headers: this._headers,
         headers: {
           authorization: this._token,
+          'Content-Type': 'application/json'
         },
         credentials: 'include',
         body: JSON.stringify({

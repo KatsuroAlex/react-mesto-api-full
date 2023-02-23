@@ -148,8 +148,25 @@ function App() {
   function handleUpdateUser(newUserData) {
     api
       .setUserInfo(newUserData)
+        .then((data) => {
+          console.log(data);
+          setCurrentUser(data);
+          closeAllPopups();
+        })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+
+  // Обновляем аватар
+  function handleUpdateAvatar(newAvatarLink) {
+    api
+      .setUserAvatar(newAvatarLink)
       .then((data) => {
-        setCurrentUser(data);
+        console.log(data);
+        console.log(currentUser)
+        setCurrentUser({...currentUser, avatar: data.avatar });
         closeAllPopups();
       })
       .catch((err) => {
@@ -157,18 +174,6 @@ function App() {
       });
   }
 
-  // Обновляем аватар
-  function handleUpdateAvatar(newAvatarLink) {
-    api
-      .setUserAvatar(newAvatarLink)
-      .then((data) => {
-        setCurrentUser({ currentUser, avatar: data.avatar });
-        closeAllPopups();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
 
   // добавляем новую карточку
   function handleAddPlaceSubmit(cardData) {
