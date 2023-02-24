@@ -132,8 +132,6 @@ const findUser = async (req, res, next) => {
   }
 };
 
-
-
 const updateUser = async (req, res, next) => {
   try {
     const updates = req.body; 
@@ -152,7 +150,6 @@ const updateUser = async (req, res, next) => {
   }
 };
 
-
 const updateAvatar = async (req, res, next) => {
   try {
     const options = { new: true };
@@ -169,9 +166,6 @@ const updateAvatar = async (req, res, next) => {
     return next(err);
   }
 };
-
-
-
 
 module.exports = {
   getUsers,
