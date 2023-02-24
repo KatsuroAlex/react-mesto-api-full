@@ -1,6 +1,5 @@
 const CORS_WHITELIST = ['http://localhost:3001',
-  // 'https://mesto.students.nomoredomains.icu',
-  // 'http://mesto.students.nomoredomains.icu',
+  'https://katsuroproject15.nomoredomains.work',
 ];
 
 const corsOption = {
