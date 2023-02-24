@@ -159,10 +159,7 @@ const updateAvatar = async (req, res, next) => {
     const user = await User.findByIdAndUpdate(req.user._id, req.body, options).orFail(new NotFoundError('Пользователь по указанному _id не найден'));
     console.log(user);
     // return res.status(SUCCESS).json({ user });
-    return res.status(SUCCESS).json(user);
-
-    // return res.status(SUCCESS).send(user);
-    
+    return res.status(SUCCESS).json(user);    
   } catch (err) {
     if (err.name === 'ValidationError') {
       next(new ValidationError(`${Object.values(err.errors).map((error) => error.message).join(', ')}`));

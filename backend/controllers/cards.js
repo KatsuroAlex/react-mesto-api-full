@@ -7,10 +7,20 @@ const {
   SUCCESS,
 } = require('../errors/constants');
 
+// const getCards = async (req, res, next) => {
+//   try {
+//     const cards = await Card.find({}).populate(['owner', 'likes']);
+//     return res.status(SUCCESS).send(cards);
+//   } catch (err) {
+//     return next(err);
+//   }
+// };
+
 const getCards = async (req, res, next) => {
   try {
     const cards = await Card.find({}).populate(['owner', 'likes']);
-    return res.status(SUCCESS).send(cards);
+    const mappedCards = cards.map((card) => card);
+    return res.status(SUCCESS).send(mappedCards);
   } catch (err) {
     return next(err);
   }
@@ -19,7 +29,7 @@ const getCards = async (req, res, next) => {
 const createCard = async (req, res, next) => {
   try {
     const { name, link } = req.body;
-    const card = await Card.create({ name, link, owner: req.user._id });
+    const card = await Card.create({ name, link, owner: req.user._id }).populate('owner');
     return res.status(SUCCESS).json(card);
   } catch (err) {
     if (err.name === 'ValidationError') {
@@ -30,6 +40,24 @@ const createCard = async (req, res, next) => {
     return next(err);
   }
 };
+
+// const createCard = async (req, res, next) => {
+//   const { name, link } = req.body;
+//   Card.create({ name, link, owner: req.user._id })
+//     .then((card) => card.populate('owner'))
+//     .then((card) => res.send(card))
+//     .catch ((err) => {
+//         if (err.name === 'ValidationError') {
+//           next(new ValidationError(`${Object.values(err.errors).map((error) => error.message).join(', ')}`));
+//         } else {
+//           return next(err);
+//         }
+//         return next(err);
+//       });
+//     };
+
+
+
 
 const deleteCard = async (req, res, next) => {
   try {

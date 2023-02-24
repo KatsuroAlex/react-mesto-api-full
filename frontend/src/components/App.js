@@ -36,25 +36,7 @@ function App() {
   });
 
 
-
-  useEffect(() => {
-    if(loggedIn){   
-      api.getProfileData()
-        .then((res) => {
-        handleLoggedIn();
-        setCurrentUser(res);
-      }) 
-      .catch((err) => console.log(err));
-    
-      api.getInitialCards()
-        .then((data) => {
-          setCards(data);
-        })
-        .catch((err) => console.log(err));
-    }
-  }, [loggedIn]);
-
-  // useEffect(() => {
+  //   useEffect(() => {
   //   tokenCheck()
   // }, [])
 
@@ -70,49 +52,61 @@ function App() {
   //     })
   //     .catch((err) => console.log(err))
   // }
-  // //при загрузке если получаем пользователя то перенаправляем его
-  // // useEffect(() => {
-  // //   api
-  // //     .getProfileData()
-  // //     .then((data) => {
-  // //       setCurrentUser(data);
-  // //     })
-  // //     .catch((err) => console.log(err));
-  // // }, []);
+
+
+
   // useEffect(() => {
-  //   // if(loggedIn){
-  //     api
-  //       .getProfileData()
+  //   if(loggedIn){   
+  //     api.getProfileData()
+  //       .then((res) => {
+  //       handleLoggedIn();
+  //       setCurrentUser(res);
+  //     }) 
+  //     .catch((err) => console.log(err));
+    
+  //     api.getInitialCards()
   //       .then((data) => {
-  //         console.log(data);
-  //         // handleLoggedIn();
-  //         // setEmail(data.email);
-  //         setCurrentUser(data);
-  //         history.push("/");
+  //         setCards(data);
   //       })
   //       .catch((err) => console.log(err));
-  //   // },[loggedIn]);
-  // }, [history, loggedIn]);
-  
-  // // получаем данные карточек при загрузке страницы
-  
-  // // useEffect(() => {
-  // //   api
-  // //     .getInitialCards()
-  // //     .then((data) => {
-  // //       setCards(data);
-  // //     })
-  // //     .catch((err) => console.log(err));
-  // // }, []);
-  // useEffect(() => {
-  //   if(loggedIn){
-  //     api.getInitialCards()
-  //     .then((data) => {
-  //       setCards(data);
-  //     })
-  //     .catch((err) => console.log(err));
   //   }
   // }, [loggedIn]);
+
+
+
+  //при загрузке страницы получаем данные карточек
+  useEffect(() => {
+    if(loggedIn){
+      api.getInitialCards()
+      .then((data) => {
+        setCards(data);
+      })
+      .catch(err => {
+        console.log(err);
+      })
+    }
+  }, [loggedIn]);
+
+  //при загрузке если получаем пользователя то перенаправляем его
+  useEffect(() => {
+    api.getProfileData()
+      .then(data => {
+        handleLoggedIn();
+        setEmail(data.email);
+        setCurrentUser(data);
+        history.push('/');
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  }, [history, loggedIn]);
+
+
+
+
+
+
+
 
 
 
@@ -190,9 +184,9 @@ function App() {
 
   function handleCardLike(card) {
     // Снова проверяем, есть ли уже лайк на этой карточке
-    // const isLiked = card.likes.some((i) => i._id === currentUser._id);
-    const isLiked = card.likes.some((i) => i === currentUser._id);
-
+    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+    console.log(currentUser._id);
+    // const isLiked = card.likes.some((i) => i === currentUser._id);
     // Отправляем запрос в API и получаем обновлённые данные карточки
     api
       .changeLikeCardStatus(card._id, !isLiked)
