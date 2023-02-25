@@ -89,31 +89,19 @@ function App() {
 
   //при загрузке если получаем пользователя то перенаправляем его
   useEffect(() => {
-    api.getProfileData()
-      .then(data => {
-        handleLoggedIn();
-        setEmail(data.email);
-        setCurrentUser(data);
-        history.push('/');
-      })
-      .catch(err => {
-        console.log(err);
-      })
+    // if(loggedIn){
+      api.getProfileData()
+       .then(data => {
+         handleLoggedIn();
+         setEmail(data.email);
+         setCurrentUser(data);
+         history.push('/');
+       })
+       .catch(err => {
+         console.log(err);
+       })
+      // }
   }, [history, loggedIn]);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   function handleCardClick(card) {
     setSelectedCard({ isOpen: true, element: card });
