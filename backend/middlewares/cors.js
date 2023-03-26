@@ -1,4 +1,5 @@
 const CORS_WHITELIST = ['http://localhost:3001',
+  'http://localhost:3000',
   'http://katsuroproject15.nomoredomains.work',
 ];
 
