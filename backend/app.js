@@ -4,6 +4,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 
+
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
@@ -14,22 +15,22 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const path = require('path');
 const corsOption = require('./middlewares/cors');
 
+
 const { PORT = 3000 } = process.env;
 const app = express();
 
 // app.use('/api', require('../router'));
 // app.use(express.static(path.join(__dirname, 'build')));
-// app.use(express.static(path.join(__dirname, '../frontend/build')));  
+app.use(express.static(path.join(__dirname, '../frontend/build')));  
 app.use(bodyParser.json());
 
 // // подключаем мидлвары, роуты и тд
 app.use(express.json());
 app.use(cookieParser());
 
-
 app.use(requestLogger); // логгер запросов
-app.use(cors(corsOption));
 
+app.use(cors(corsOption));
 
 app.get('/crash-test', () => {
   setTimeout(() => {
