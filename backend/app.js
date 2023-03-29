@@ -20,7 +20,7 @@ const { PORT = 3000 } = process.env;
 const app = express();
 
 // app.use('/api', require('../router'));
-app.use(express.static(path.join(__dirname, 'build')));
+// app.use(express.static(path.join(__dirname, 'build')));
 // app.use(express.static(path.join(__dirname, '../frontend/build')));  
 app.use(bodyParser.json());
 
@@ -39,7 +39,7 @@ app.get('/crash-test', () => {
 }); 
 
 /// основные роуты
-app.use(router);
+app.use('/api', router);
 
 app.use(errorLogger); // логгер ошибок
 
