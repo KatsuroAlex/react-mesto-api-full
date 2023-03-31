@@ -40,7 +40,7 @@ app.get('/crash-test', () => {
 }); 
 
 /// основные роуты
-app.use('/api', router);
+app.use(router);
 
 app.use(errorLogger); // логгер ошибок
 
