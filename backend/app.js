@@ -19,7 +19,7 @@ const corsOption = require('./middlewares/cors');
 const { PORT = 3001 } = process.env;
 const app = express();
 
-app.use(console.log(request));
+// app.use(console.log(request));
 
 // подключаемся к серверу mongo
 mongoose.set('strictQuery', true);
