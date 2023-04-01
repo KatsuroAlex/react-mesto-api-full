@@ -59,7 +59,9 @@ app.use(handleErrors);
 
 // подключаемся к серверу mongo
 mongoose.set('strictQuery', true);
-mongoose.connect('mongodb://localhost:27017/mestodb', {
+// mongoose.connect('mongodb://localhost:27017/mestodb', {
+mongoose.connect('mongodb://127.0.0.1/mestodb', {
+
 }, () => {
   app.listen(PORT, () => {
     console.log(`App listening on port ${PORT}!`);
