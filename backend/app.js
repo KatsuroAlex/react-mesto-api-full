@@ -21,8 +21,8 @@ const app = express();
 
 // app.use(express.static(path.join(__dirname, 'build')));
 // app.use(express.static(path.join(__dirname, '../frontend/build')));  
-// app.use(cors({origin: 'http://katsuroproject15.nomoredomains.work'}));
-app.use(cors({origin: '*'}));
+app.use(cors({origin: 'http://katsuroprojectbackend15.nomoredomains.work'}));
+// app.use(cors({origin: '*'}));
 app.use(bodyParser.json());
 
 // // подключаем мидлвары, роуты и тд
