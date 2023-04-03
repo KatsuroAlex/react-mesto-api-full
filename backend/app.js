@@ -4,7 +4,6 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 
-
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
@@ -15,11 +14,8 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const path = require('path');
 const corsOption = require('./middlewares/cors');
 
-
 const { PORT = 3001 } = process.env;
 const app = express();
-
-// app.use(console.log(request));
 
 // подключаемся к серверу mongo
 mongoose.set('strictQuery', true);

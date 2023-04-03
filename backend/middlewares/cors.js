@@ -1,14 +1,16 @@
 const CORS_WHITELIST = [
-  // 'http://localhost:3001',
-  // 'https://localhost:3001',
-  // 'http://localhost:3000',
-  // 'https://localhost:3000',
+  'http://localhost:3001',
+  'https://localhost:3001',
+  'http://localhost:3000',
+  'https://localhost:3000',
   'http://Katsuroproject15.nomoredomains.work',
   'https://Katsuroproject15.nomoredomains.work',
   'http://katsuroproject15.nomoredomains.work',
   'https://katsuroproject15.nomoredomains.work',
-  // 'http://Katsuroprojectbackend15.nomoredomains.work',
-  // 'https://Katsuroprojectbackend15.nomoredomains.work',
+  'http://Katsuroprojectbackend15.nomoredomains.work',
+  'https://Katsuroprojectbackend15.nomoredomains.work',
+  'http://katsuroprojectbackend15.nomoredomains.work',
+  'https://katsuroprojectbackend15.nomoredomains.work',
 ];
 
 const corsOption = {

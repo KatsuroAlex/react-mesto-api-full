@@ -1,16 +1,18 @@
 ### Регистрация
-POST http://158.160.6.193:3000/api/signup
+POST http://158.160.24.94:3000/signup
 Content-Type: application/json
 
 {
+  "email": "mongo@mongo.ru",
+  "password": "mongo",
+  "name": "test",
+  "about": "about",
+  "avatar": "https://ya.ru/av.bmp"
 }
-
-### Выход из аккаунта
-GET http://localhost:3000/logout
 
 
 ### Вход в аккаунт
-POST http://localhost:3000/signin
+POST http://localhost:3001/signin
 Content-Type: application/json
 
 {
@@ -18,12 +20,13 @@ Content-Type: application/json
   "password": "admin"
 }
 
+
 ### Выход из аккаунта
-GET http://localhost:3000/logout
+GET http://localhost:3001/logout
 
 
 ### Регистрация
-POST http://localhost:3000/signup
+POST http://localhost:3001/signup
 Content-Type: application/json
 
 {
@@ -35,31 +38,27 @@ Content-Type: application/json
 }
 
 
-
-
-
-
 ### Получить всех пользователей
-GET http://localhost:3000/users
+GET http://localhost:3001/users
 
 ### возвращает пользователя по ID
-GET http://localhost:3000/users/63e3fc62c2ccf7b70fc2f616
+GET http://localhost:3001/users/63e92a801b2a6e21caec4850
 
 
 ### Создает пользователя
-POST http://localhost:3000/users
+POST http://localhost:3001/users
 Content-Type: application/json
 
 {
-  "name": "1",
+  "name": "diman",
   "about": "admin",
   "avatar": "https://ya.ru/av.bmp",
-  "email": "dimannas@mail.ru",
-  "password": "12w4"
+  "email": "diman@diman.ru.ru",
+  "password": "diman"
 }
 
 ### Найти пользователя
-GET http://localhost:3000/users/me
+GET http://localhost:3001/users/me
 # Content-Type: Bearer
 
 # {
@@ -73,7 +72,7 @@ PATCH http://localhost:3000/users/me
 Content-Type: application/json
 
 {
-  "name": "Обновленное имя11",
+  "name": "Обновленное3",
   "about": "Обновленная информация о себе"
 }
 
@@ -86,20 +85,16 @@ Content-Type: application/json
 }
 
 
-
-
-
-
 ### получить все карточки
-GET http://localhost:3000/cards
+GET http://localhost:3001/cards
 
 ### создает карточку
-POST http://localhost:3000/cards
+POST http://localhost:3001/cards
 Content-Type: application/json
 
 {
   "name": "111111",
-  "link": "5646456",
+  "link": "https://images.unsplash.com/photo-1680246637672-7a631a45f28d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyfHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60",
 }
 
 ### удаляет карточку по id
