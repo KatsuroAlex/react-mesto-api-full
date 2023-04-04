@@ -17,12 +17,12 @@ const corsOption = require('./middlewares/cors');
 const { PORT = 3001 } = process.env;
 const app = express();
 
-// подключаемся к серверу mongo
-mongoose.set('strictQuery', true);
-mongoose.connect('mongodb://127.0.0.1:27017/mestodb', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+// // подключаемся к серверу mongo
+// mongoose.set('strictQuery', true);
+// mongoose.connect('mongodb://127.0.0.1:27017/mestodb', {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+// });
 
 // app.use(express.static(path.join(__dirname, 'build')));
 // app.use(express.static(path.join(__dirname, '../frontend/build')));  
@@ -55,16 +55,16 @@ app.use(errors()); // celebrate
 
 app.use(handleErrors);
 
-// // подключаемся к серверу mongo
-// mongoose.set('strictQuery', true);
-// // mongoose.connect('mongodb://localhost:27017/mestodb', {
-// mongoose.connect('mongodb://127.0.0.1:27017/mestodb', {
-// }, () => {
-//   app.listen(PORT, () => {
-//     console.log(`App listening on port ${PORT}!`);
-//   });
-// });
-
-app.listen(PORT, () => {
-  console.log(`App listening on port ${PORT}!`);
+// подключаемся к серверу mongo
+mongoose.set('strictQuery', true);
+// mongoose.connect('mongodb://localhost:27017/mestodb', {
+mongoose.connect('mongodb://127.0.0.1:27017/mestodb', {
+}, () => {
+  app.listen(PORT, () => {
+    console.log(`App listening on port ${PORT}!`);
+  });
 });
+
+// app.listen(PORT, () => {
+//   console.log(`App listening on port ${PORT}!`);
+// });
